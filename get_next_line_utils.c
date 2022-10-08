@@ -12,7 +12,6 @@
 
 #include "get_next_line.h"
 #include <stddef.h>
-#include <stdio.h>
 
 int	ft_strlen(const char *str)
 {
