@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_temp(int fd, char *buffer, char *stash)
+char	*ft_read_file(int fd, char *buffer, char *stash)
 {
 	int		i;
 	char	*temp;
@@ -69,7 +69,7 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	line = ft_temp(fd, buffer, stash);
+	line = ft_read_file(fd, buffer, stash);
 	free(buffer);
 	buffer = NULL;
 	if (!line)
