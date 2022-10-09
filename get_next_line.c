@@ -73,7 +73,7 @@ char	*ft_extract_from_line(char *line)
 	if (line[start] == '\0' || line[1] == '\0')
 		return (NULL);
 
-	// make sure that stash only 
+	// copy to stash from start up to (line length - start) from line
 	stash = ft_substr(line, start + 1, ft_strlen(line) - start);
 	if (*stash == '\0')
 	{
