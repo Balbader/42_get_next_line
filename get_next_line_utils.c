@@ -22,6 +22,7 @@ int	ft_strlen(const char *str)
 	return (i);
 }
 
+// To extract every new read and copy it to static stash
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
@@ -42,6 +43,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
+// To join buffer read() to stash
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*s3;
@@ -62,6 +64,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (s3);
 }
 
+// To search for '\n' in buffer
 char	*ft_strchr(const char *s, int c)
 {
 	int		i;
@@ -78,6 +81,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
+// To initialize statid stash during 1st read()
 char	*ft_strdup(const char *s1)
 {
 	char	*dup;
