@@ -12,6 +12,7 @@
 
 #include "get_next_line.h"
 
+// Read fd and stash characters read up to '\n' and save it to line
 char	*ft_read_file(int fd, char *buffer, char *stash)
 {
 	// i = tot count of element read
@@ -19,6 +20,7 @@ char	*ft_read_file(int fd, char *buffer, char *stash)
 	// *temp arr to hold stash content
 	char	*temp;
 
+	// initialize i to 1 in order to start the loop
 	i = 1;
 	while (i != '\0')
 	{
@@ -53,23 +55,32 @@ char	*ft_read_file(int fd, char *buffer, char *stash)
 	return (stash);
 }
 
-char	*ft_get_line(char *line)
+// Take the line that read the fd
+// and extract and save the new characters to stash
+char	*ft_extract_from_line(char *line)
 {
+	// array that will hold the extraction from line
 	char	*stash;
-	size_t	i;
+	// start = starting point for the extraction
+	size_t	start;
 
-	i = 0;
-	while (line[i] != '\n' && line[i] != '\0')
-		i++;
-	if (line[i] == '\0' || line[1] == '\0')
+	start = 0;
+	// iterate through line
+	while (line[start] != '\n' && line[start] != '\0')
+		start++;
+
+	// check if end of file is reached
+	if (line[start] == '\0' || line[1] == '\0')
 		return (NULL);
-	stash = ft_substr(line, i + 1, ft_strlen(line) - i);
+
+	// make sure that stash only 
+	stash = ft_substr(line, start + 1, ft_strlen(line) - start);
 	if (*stash == '\0')
 	{
 		free(stash);
 		stash = NULL;
 	}
-	line[i + 1] = '\0';
+	line[start + 1] = '\0';
 	return (stash);
 }
 
@@ -89,6 +100,6 @@ char	*get_next_line(int fd)
 	buffer = NULL;
 	if (!line)
 		return (NULL);
-	stash = ft_get_line(line);
+	stash = ft_extract_from_line(line);
 	return (line);
 }
