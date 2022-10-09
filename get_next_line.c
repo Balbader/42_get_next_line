@@ -14,24 +14,39 @@
 
 char	*ft_read_file(int fd, char *buffer, char *stash)
 {
+	// i = tot count of element read
 	int		i;
+	// *temp arr to hold stash content
 	char	*temp;
 
 	i = 1;
 	while (i != '\0')
 	{
+		// read file
 		i = read(fd, buffer, BUFFER_SIZE);
+
+		// and make sure there is something in it
 		if (i == -1)
 			return (0);
 		else if (i == 0)
 			break ;
+
+		// after read() initialize last element of buffer to '\0' 
 		buffer[i] = '\0';
+
+		// if stash has no content initialize it to empty str
 		if (!stash)
 			stash = ft_strdup("");
+
+		// otherwise assign stash to temp
 		temp = stash;
+		// and reassign stash with join of temp + buffer read for every loop iteration
 		stash = ft_strjoin(temp, buffer);
+		// then free temp for following iteration
 		free(temp);
 		temp = NULL;
+		
+		// if '\n' is read, break
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
