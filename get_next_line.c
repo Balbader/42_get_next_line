@@ -36,7 +36,7 @@ char	*ft_read_file(int fd, char *buffer, char *stash)
 		// after read() initialize last element of buffer to '\0' 
 		buffer[i] = '\0';
 
-		// if stash has no content initialize it to empty str
+		// if stash has no content initialize it to empty str in order to strjoin
 		if (!stash)
 			stash = ft_strdup("");
 
