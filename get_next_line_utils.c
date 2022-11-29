@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: baalbade <baalbade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 18:54:42 by baalbade          #+#    #+#             */
-/*   Updated: 2022/10/08 22:32:48 by baalbade         ###   ########.fr       */
+/*   Created: 2022/11/21 07:07:32 by baalbade          #+#    #+#             */
+/*   Updated: 2022/11/29 08:27:39 by baalbade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,57 @@ int	ft_strlen(const char *str)
 	return (i);
 }
 
-// To extract every new read and copy it to static stash
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_strjoin(const char *s1, const char *s2)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*res;
+
+	res = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!res)
+		return (NULL);
+	k = 0;
+	i = 0;
+	while (s1[i])
+		res[k++] = s1[i++];
+	j = 0;
+	while (s2[j])
+		res[k++] = s2[j++];
+	res[k] = '\0';
+	return (res);
+}
+
+char	*ft_strdup(const char *str)
+{
+	char	*dup;
+	int		i;
+	int		j;
+
+	dup = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!dup)
+		return (NULL);
+	j = 0;
+	i = 0;
+	while (str[i])
+		dup[j++] = str[i++];
+	dup[j] = '\0';
+	return (dup);
+}
+
+char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
 	char	*sub;
 	size_t	i;
 	size_t	j;
 
+	if (!s)
+		return (NULL);
 	sub = (char *)malloc(sizeof(char) * (len + 1));
 	if (!sub)
 		return (NULL);
-	j = 0;
 	i = 0;
+	j = 0;
 	while (i < len)
 	{
 		sub[j++] = s[start++];
@@ -43,31 +82,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
-// To join buffer read() to stash
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*s3;
-	int		i;
-	int		j;
-
-	s3 = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!s3)
-		return (NULL);
-	j = 0;
-	i = 0;
-	while (s1[i])
-		s3[j++] = s1[i++];
-	i = 0;
-	while (s2[i])
-		s3[j++] = s2[i++];
-	s3[j] = '\0';
-	return (s3);
-}
-
-// To search for '\n' in buffer
 char	*ft_strchr(const char *s, int c)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -79,22 +96,4 @@ char	*ft_strchr(const char *s, int c)
 	if (i == '\0')
 		return ((char *)s);
 	return (NULL);
-}
-
-// To initialize statid stash during 1st read()
-char	*ft_strdup(const char *s1)
-{
-	char	*dup;
-	int		i;
-	int		j;
-
-	dup = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
-	if (!dup)
-		return (NULL);
-	j = 0;
-	i = 0;
-	while (s1[i])
-		dup[j++] = s1[i++];
-	dup[j] = '\0';
-	return (dup);
 }

@@ -5,59 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: baalbade <baalbade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 18:53:53 by baalbade          #+#    #+#             */
-/*   Updated: 2022/10/08 18:54:22 by baalbade         ###   ########.fr       */
+/*   Created: 2022/11/21 07:07:14 by baalbade          #+#    #+#             */
+/*   Updated: 2022/11/29 08:20:21 by baalbade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// Read fd and stash characters read up to '\n' and save it to line
-char	*ft_read_file(int fd, char *buffer, char *stash)
+char	*ft_read_fd(int fd, char *buffer, char *stash)
 {
-	int		i;
-	char	*temp;
+	int		nb_read;
+	char	*tmp;
 
-	i = 1;
-	while (i != '\0')
+	nb_read = 1;
+	while (nb_read != '\0')
 	{
-		i = read(fd, buffer, BUFFER_SIZE);
-		if (i == -1)
+		nb_read = read(fd, buffer, BUFFER_SIZE);
+		if (nb_read == -1)
 			return (0);
-		else if (i == 0)
+		else if (nb_read == 0)
 			break ;
-		buffer[i] = '\0';
+		buffer[nb_read] = '\0';
 		if (!stash)
 			stash = ft_strdup("");
-		temp = stash;
-		stash = ft_strjoin(temp, buffer);
-		free(temp);
-		temp = NULL;
+		tmp = stash;
+		stash = ft_strjoin(tmp, buffer);
+		free(tmp);
+		tmp = NULL;
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
 	return (stash);
 }
 
-// Take the line that read the fd
-// and extract and save the new characters to stash
 char	*ft_extract_from_line(char *line)
 {
 	char	*stash;
-	size_t	start;
+	size_t	i;
 
-	start = 0;
-	while (line[start] != '\n' && line[start] != '\0')
-		start++;
-	if (line[start] == '\0' || line[1] == '\0')
+	i = 0;
+	while (line[i] != '\n' && line[i] != '\0')
+		i++;
+	if (line[i] == '\0' || line[1] == '\0')
 		return (NULL);
-	stash = ft_substr(line, start + 1, ft_strlen(line) - start);
+	stash = ft_substr(line, i + 1, ft_strlen(line) - i);
 	if (*stash == '\0')
 	{
 		free(stash);
 		stash = NULL;
 	}
-	line[start + 1] = '\0';
+	line[i + 1] = '\0';
 	return (stash);
 }
 
@@ -72,7 +69,7 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	line = ft_read_file(fd, buffer, stash);
+	line = ft_read_fd(fd, buffer, stash);
 	free(buffer);
 	buffer = NULL;
 	if (!line)
